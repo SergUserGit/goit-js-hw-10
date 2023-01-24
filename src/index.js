@@ -13,4 +13,11 @@ elementSearchBox.addEventListener(
 function onSearchBoxInput(evt) {
   const countriesArray = fetchCountries(evt.target.value);
   console.log(countriesArray);
+  countriesArray
+    .then(data => {
+      console.log('Данные', data);
+    })
+    .catch(error => {
+      console.log('Ошибка', error);
+    });
 }
