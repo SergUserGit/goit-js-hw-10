@@ -11,5 +11,6 @@ elementSearchBox.addEventListener(
 );
 
 function onSearchBoxInput(evt) {
-  console.log(evt.target.value);
+  const countriesArray = fetchCountries(evt.target.value);
+  console.log(countriesArray);
 }
