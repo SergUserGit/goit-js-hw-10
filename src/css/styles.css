@@ -25,6 +25,7 @@ body {
   display: flex;
   flex-direction: column;
   padding: 0;
+  margin: 0;
 }
 
 .country-item {
@@ -38,16 +39,41 @@ body {
   font-size: 24px;
 }
 
-.country-info {
+.country-info-img {
   display: flex;
   align-items: center;
 }
 
 .img-country {
-  margin-right: 5px;
+  margin-right: 10px;
 }
 
 .country-text {
   font-weight: 700;
   font-size: 36px;
+  margin: 0;
+}
+
+.info-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.info-span {
+  font-weight: 700;
+  font-size: 22px;
+}
+
+.info-text {
+  font-weight: 500;
+  font-size: 22px;
 }

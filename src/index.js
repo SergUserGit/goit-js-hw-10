@@ -56,7 +56,9 @@ function onSearchBoxInput(evt) {
         const murkupCountryInfo = getMarkupCountryInfo(
           data[0].name.official,
           data[0].flags.svg,
-          data[0].capital.join(',')
+          data[0].capital.join(', '),
+          data[0].population,
+          Object.values(data[0].languages).join(', ')
         );
         elCountryInfo.insertAdjacentHTML('afterbegin', murkupCountryInfo);
         //   console.log(data[0].name.official);
@@ -84,16 +86,26 @@ function getMarkupListCountries(countryName, flagSvgRef) {
   return strMarkup;
 }
 
-function getMarkupCountryInfo(countryName, flagSvgRef, Capital) {
+function getMarkupCountryInfo(
+  countryName,
+  flagSvgRef,
+  Capital,
+  Population,
+  Languages
+) {
   const strMarkup =
-    '<div class="country-info"><img class="img-country" src="' +
+    '<div class="country-info-img"><img class="img-country" src="' +
     flagSvgRef +
     '" alt="' +
     countryName +
     '" width="70" height="40"><p class="country-text">' +
     countryName +
-    '</p></div><ul><li><span>Capital</span><p>' +
+    '</p></div><ul class="info-list"><li class="info-item"><span class="info-span">Capital: </span><p class="info-text">' +
     Capital +
+    '</p></li><li class="info-item"><span class="info-span">Population: </span><p class="info-text">' +
+    Population +
+    '</p></li><li class="info-item"><span class="info-span">Languages: </span><p class="info-text">' +
+    Languages +
     '</p></li></ul>';
   return strMarkup;
 }
