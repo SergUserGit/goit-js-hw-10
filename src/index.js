@@ -34,44 +34,41 @@ function onSearchBoxInput(evt) {
   elCountryInfo.innerHTML = '';
 
   const countriesArray = fetchCountries(evt.target.value.trim());
+  // console.log('status', countriesArray);
   countriesArray
     .then(data => {
-      if (data.length > 10) {
-        Notiflix.Notify.info(
-          'Too many matches found. Please enter a more specific name.'
-        );
-      } else if (data.length >= 2 && data.length <= 10) {
-        const ArrayCountrySort = [...data].sort((a, b) =>
-          a.name.official.localeCompare(b.name.official)
-        );
+      if (data.status === 404) {
+        Notiflix.Notify.failure('Oops, there is no country with that name');
+      } else {
+        if (data.length > 10) {
+          Notiflix.Notify.info(
+            'Too many matches found. Please enter a more specific name.'
+          );
+        } else if (data.length >= 2 && data.length <= 10) {
+          const ArrayCountrySort = [...data].sort((a, b) =>
+            a.name.official.localeCompare(b.name.official)
+          );
 
-        const markupArray = ArrayCountrySort.map(el => {
-          return getMarkupListCountries(el.name.official, el.flags.svg);
-        });
+          const markupArray = ArrayCountrySort.map(el => {
+            return getMarkupListCountries(el.name.official, el.flags.svg);
+          });
 
-        const murkupCountries = markupArray.join('');
+          const murkupCountries = markupArray.join('');
 
-        elCountryList.insertAdjacentHTML('afterbegin', murkupCountries);
-      } else if (data.length === 1) {
-        const murkupCountryInfo = getMarkupCountryInfo(
-          data[0].name.official,
-          data[0].flags.svg,
-          data[0].capital.join(', '),
-          data[0].population,
-          Object.values(data[0].languages).join(', ')
-        );
-        elCountryInfo.insertAdjacentHTML('afterbegin', murkupCountryInfo);
-        //   console.log(data[0].name.official);
-        //   const strCapitals = data[0].capital.join(',');
-        //   console.log(strCapitals);
-        //   console.log(data[0].population);
-        //   console.log(data[0].flags.svg);
-        // console.log(Object.values(data[0].languages).join(','));
+          elCountryList.insertAdjacentHTML('afterbegin', murkupCountries);
+        } else if (data.length === 1) {
+          const murkupCountryInfo = getMarkupCountryInfo(
+            data[0].name.official,
+            data[0].flags.svg,
+            data[0].capital.join(', '),
+            data[0].population,
+            Object.values(data[0].languages).join(', ')
+          );
+          elCountryInfo.insertAdjacentHTML('afterbegin', murkupCountryInfo);
+        }
       }
     })
-    .catch(error => {
-      console.log('Ошибка', error);
-    });
+    .catch(error => {});
 }
 
 function getMarkupListCountries(countryName, flagSvgRef) {
