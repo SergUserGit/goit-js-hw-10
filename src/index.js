@@ -33,7 +33,13 @@ function onSearchBoxInput(evt) {
   elCountryList.innerHTML = '';
   elCountryInfo.innerHTML = '';
 
-  const countriesArray = fetchCountries(evt.target.value.trim());
+  const inputValue = evt.target.value.trim();
+
+  if (inputValue === '') {
+    return;
+  }
+
+  const countriesArray = fetchCountries(inputValue);
   // console.log('status', countriesArray);
   countriesArray
     .then(data => {
