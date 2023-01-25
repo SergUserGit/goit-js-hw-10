@@ -12,6 +12,7 @@ body {
   line-height: 1.5;
 }
 
+
 #search-box {
   font: inherit;
   padding: 8px;
@@ -35,4 +36,18 @@ body {
 .contry-name {
   font-weight: 500;
   font-size: 24px;
+}
+
+.country-info {
+  display: flex;
+  align-items: center;
+}
+
+.img-country {
+  margin-right: 5px;
+}
+
+.country-text {
+  font-weight: 700;
+  font-size: 36px;
 }

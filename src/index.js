@@ -53,12 +53,18 @@ function onSearchBoxInput(evt) {
 
         elCountryList.insertAdjacentHTML('afterbegin', murkupCountries);
       } else if (data.length === 1) {
+        const murkupCountryInfo = getMarkupCountryInfo(
+          data[0].name.official,
+          data[0].flags.svg,
+          data[0].capital.join(',')
+        );
+        elCountryInfo.insertAdjacentHTML('afterbegin', murkupCountryInfo);
         //   console.log(data[0].name.official);
         //   const strCapitals = data[0].capital.join(',');
         //   console.log(strCapitals);
         //   console.log(data[0].population);
         //   console.log(data[0].flags.svg);
-        console.log(Object.values(data[0].languages).join(','));
+        // console.log(Object.values(data[0].languages).join(','));
       }
     })
     .catch(error => {
@@ -78,4 +84,16 @@ function getMarkupListCountries(countryName, flagSvgRef) {
   return strMarkup;
 }
 
-function getMarkupCountryInfo() {}
+function getMarkupCountryInfo(countryName, flagSvgRef, Capital) {
+  const strMarkup =
+    '<div class="country-info"><img class="img-country" src="' +
+    flagSvgRef +
+    '" alt="' +
+    countryName +
+    '" width="70" height="40"><p class="country-text">' +
+    countryName +
+    '</p></div><ul><li><span>Capital</span><p>' +
+    Capital +
+    '</p></li></ul>';
+  return strMarkup;
+}
