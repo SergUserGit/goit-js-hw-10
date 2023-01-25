@@ -39,6 +39,7 @@ function onSearchBoxInput(evt) {
     .then(data => {
       if (data.status === 404) {
         Notiflix.Notify.failure('Oops, there is no country with that name');
+        return;
       } else {
         if (data.length > 10) {
           Notiflix.Notify.info(
