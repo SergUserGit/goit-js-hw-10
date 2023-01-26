@@ -38,24 +38,7 @@ function onSearchBoxInput(evt) {
   }
   const countriesArray = fetchCountries(inputValue);
 
-  countriesArray
-    .then(data => {
-      if (data.status === 404) {
-        displayErrorMessage('Oops, there is no country with that name');
-        return;
-      } else {
-        if (data.length > 10) {
-          displayInfoMessage(
-            'Too many matches found. Please enter a more specific name.'
-          );
-        } else if (data.length >= 2 && data.length <= 10) {
-          displayListCountries(data);
-        } else if (data.length === 1) {
-          displayInfoCountries(data);
-        }
-      }
-    })
-    .catch(error => {});
+  countriesArray.then(displayData).catch(error => {});
 }
 
 function getMarkupListCountries(countryName, flagSvgRef) {
@@ -138,4 +121,21 @@ function displayListCountries(data) {
 function displayInfoCountries(data) {
   const murkupCountryInfo = getMarkupCountryInfo(data[0]);
   elCountryInfo.insertAdjacentHTML('afterbegin', murkupCountryInfo);
+}
+
+function displayData(data) {
+  if (data.status === 404) {
+    displayErrorMessage('Oops, there is no country with that name');
+    return;
+  } else {
+    if (data.length > 10) {
+      displayInfoMessage(
+        'Too many matches found. Please enter a more specific name.'
+      );
+    } else if (data.length >= 2 && data.length <= 10) {
+      displayListCountries(data);
+    } else if (data.length === 1) {
+      displayInfoCountries(data);
+    }
+  }
 }
