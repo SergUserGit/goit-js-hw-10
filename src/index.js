@@ -30,9 +30,6 @@ elementSearchBox.addEventListener(
 );
 
 function onSearchBoxInput(evt) {
-  // elCountryList.innerHTML = '';
-  // elCountryInfo.innerHTML = '';
-
   clearMarkup();
 
   const inputValue = evt.target.value.trim();
@@ -44,7 +41,6 @@ function onSearchBoxInput(evt) {
   countriesArray
     .then(data => {
       if (data.status === 404) {
-        //  Notiflix.Notify.failure('Oops, there is no country with that name');
         displayErrorMessage('Oops, there is no country with that name');
         return;
       } else {
@@ -52,25 +48,8 @@ function onSearchBoxInput(evt) {
           displayInfoMessage(
             'Too many matches found. Please enter a more specific name.'
           );
-          //    Notiflix.Notify.info(
-          //      'Too many matches found. Please enter a more specific name.'
-          //    );
         } else if (data.length >= 2 && data.length <= 10) {
-          //  const ArrayCountrySort = [...data].sort((a, b) =>
-          //   a.name.official.localeCompare(b.name.official)
-          //  );
-
-          const arrayCountrySort = getSortArray(data);
-
-          //     const markupArray = arrayCountrySort.map(el => {
-          //       return getMarkupListCountries(el.name.official, el.flags.svg);
-          //     });
-
-          const murkupCountries = getMurkupCountries(arrayCountrySort);
-
-          //       const murkupCountries = markupArray.join('');
-
-          elCountryList.insertAdjacentHTML('afterbegin', murkupCountries);
+          displayListCountries(data);
         } else if (data.length === 1) {
           const murkupCountryInfo = getMarkupCountryInfo(
             data[0].name.official,
@@ -150,4 +129,18 @@ function getArrayMurkupCountries(countryArray) {
   return countryArray.map(el => {
     return getMarkupListCountries(el.name.official, el.flags.svg);
   });
+}
+
+function displayListCountries(data) {
+  const arrayCountrySort = getSortArray(data);
+
+  //     const markupArray = arrayCountrySort.map(el => {
+  //       return getMarkupListCountries(el.name.official, el.flags.svg);
+  //     });
+
+  const murkupCountries = getMurkupCountries(arrayCountrySort);
+
+  //       const murkupCountries = markupArray.join('');
+
+  elCountryList.insertAdjacentHTML('afterbegin', murkupCountries);
 }
