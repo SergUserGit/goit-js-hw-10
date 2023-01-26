@@ -51,14 +51,15 @@ function onSearchBoxInput(evt) {
         } else if (data.length >= 2 && data.length <= 10) {
           displayListCountries(data);
         } else if (data.length === 1) {
-          const murkupCountryInfo = getMarkupCountryInfo(
-            data[0].name.official,
-            data[0].flags.svg,
-            data[0].capital.join(', '),
-            data[0].population,
-            Object.values(data[0].languages).join(', ')
-          );
-          elCountryInfo.insertAdjacentHTML('afterbegin', murkupCountryInfo);
+          //    const murkupCountryInfo = getMarkupCountryInfo(
+          //      data[0].name.official,
+          //      data[0].flags.svg,
+          //      data[0].capital.join(', '),
+          //        data[0].population,
+          //       Object.values(data[0].languages).join(', ')
+          //     );
+          //    elCountryInfo.insertAdjacentHTML('afterbegin', murkupCountryInfo);
+          displayInfoCountries(data);
         }
       }
     })
@@ -78,12 +79,28 @@ function getMarkupListCountries(countryName, flagSvgRef) {
 }
 
 function getMarkupCountryInfo(
-  countryName,
-  flagSvgRef,
-  Capital,
-  Population,
-  Languages
+  //  countryName,
+  //  flagSvgRef,
+  //  Capital,
+  //  Population,
+  //  Languages
+  dataObject
 ) {
+  //data[0].name.official,
+  //  data[0].flags.svg,
+  //  data[0].capital.join(', '),
+  //  data[0].population,
+  //  Object.values(data[0].languages).join(', ');
+
+  const {
+    population: Population,
+    capital,
+    name: { official: countryName },
+    flags: { svg: flagSvgRef },
+  } = dataObject;
+
+  const Capital = capital.join();
+
   const strMarkup =
     '<div class="country-info-img"><img class="img-country" src="' +
     flagSvgRef +
@@ -133,14 +150,17 @@ function getArrayMurkupCountries(countryArray) {
 
 function displayListCountries(data) {
   const arrayCountrySort = getSortArray(data);
-
-  //     const markupArray = arrayCountrySort.map(el => {
-  //       return getMarkupListCountries(el.name.official, el.flags.svg);
-  //     });
-
   const murkupCountries = getMurkupCountries(arrayCountrySort);
-
-  //       const murkupCountries = markupArray.join('');
-
   elCountryList.insertAdjacentHTML('afterbegin', murkupCountries);
+}
+
+function displayInfoCountries(data) {
+  const murkupCountryInfo = getMarkupCountryInfo(
+    data[0].name.official,
+    data[0].flags.svg,
+    data[0].capital.join(', '),
+    data[0].population,
+    Object.values(data[0].languages).join(', ')
+  );
+  elCountryInfo.insertAdjacentHTML('afterbegin', murkupCountryInfo);
 }
