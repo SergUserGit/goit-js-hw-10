@@ -51,14 +51,6 @@ function onSearchBoxInput(evt) {
         } else if (data.length >= 2 && data.length <= 10) {
           displayListCountries(data);
         } else if (data.length === 1) {
-          //    const murkupCountryInfo = getMarkupCountryInfo(
-          //      data[0].name.official,
-          //      data[0].flags.svg,
-          //      data[0].capital.join(', '),
-          //        data[0].population,
-          //       Object.values(data[0].languages).join(', ')
-          //     );
-          //    elCountryInfo.insertAdjacentHTML('afterbegin', murkupCountryInfo);
           displayInfoCountries(data);
         }
       }
@@ -78,28 +70,17 @@ function getMarkupListCountries(countryName, flagSvgRef) {
   return strMarkup;
 }
 
-function getMarkupCountryInfo(
-  //  countryName,
-  //  flagSvgRef,
-  //  Capital,
-  //  Population,
-  //  Languages
-  dataObject
-) {
-  //data[0].name.official,
-  //  data[0].flags.svg,
-  //  data[0].capital.join(', '),
-  //  data[0].population,
-  //  Object.values(data[0].languages).join(', ');
-
+function getMarkupCountryInfo(dataObject) {
   const {
     population: Population,
     capital,
     name: { official: countryName },
     flags: { svg: flagSvgRef },
+    languages,
   } = dataObject;
 
-  const Capital = capital.join();
+  const Capital = capital.join(', ');
+  const Languages = Object.values(languages).join(', ');
 
   const strMarkup =
     '<div class="country-info-img"><img class="img-country" src="' +
@@ -155,12 +136,6 @@ function displayListCountries(data) {
 }
 
 function displayInfoCountries(data) {
-  const murkupCountryInfo = getMarkupCountryInfo(
-    data[0].name.official,
-    data[0].flags.svg,
-    data[0].capital.join(', '),
-    data[0].population,
-    Object.values(data[0].languages).join(', ')
-  );
+  const murkupCountryInfo = getMarkupCountryInfo(data[0]);
   elCountryInfo.insertAdjacentHTML('afterbegin', murkupCountryInfo);
 }
