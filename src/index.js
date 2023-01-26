@@ -30,37 +30,45 @@ elementSearchBox.addEventListener(
 );
 
 function onSearchBoxInput(evt) {
-  elCountryList.innerHTML = '';
-  elCountryInfo.innerHTML = '';
+  // elCountryList.innerHTML = '';
+  // elCountryInfo.innerHTML = '';
+
+  clearMarkup();
 
   const inputValue = evt.target.value.trim();
-
   if (inputValue === '') {
     return;
   }
-
   const countriesArray = fetchCountries(inputValue);
-  // console.log('status', countriesArray);
+
   countriesArray
     .then(data => {
       if (data.status === 404) {
-        Notiflix.Notify.failure('Oops, there is no country with that name');
+        //  Notiflix.Notify.failure('Oops, there is no country with that name');
+        displayErrorMessage('Oops, there is no country with that name');
         return;
       } else {
         if (data.length > 10) {
-          Notiflix.Notify.info(
+          displayInfoMessage(
             'Too many matches found. Please enter a more specific name.'
           );
+          //    Notiflix.Notify.info(
+          //      'Too many matches found. Please enter a more specific name.'
+          //    );
         } else if (data.length >= 2 && data.length <= 10) {
-          const ArrayCountrySort = [...data].sort((a, b) =>
-            a.name.official.localeCompare(b.name.official)
-          );
+          //  const ArrayCountrySort = [...data].sort((a, b) =>
+          //   a.name.official.localeCompare(b.name.official)
+          //  );
 
-          const markupArray = ArrayCountrySort.map(el => {
-            return getMarkupListCountries(el.name.official, el.flags.svg);
-          });
+          const arrayCountrySort = getSortArray(data);
 
-          const murkupCountries = markupArray.join('');
+          //     const markupArray = arrayCountrySort.map(el => {
+          //       return getMarkupListCountries(el.name.official, el.flags.svg);
+          //     });
+
+          const murkupCountries = getMurkupCountries(arrayCountrySort);
+
+          //       const murkupCountries = markupArray.join('');
 
           elCountryList.insertAdjacentHTML('afterbegin', murkupCountries);
         } else if (data.length === 1) {
@@ -112,4 +120,34 @@ function getMarkupCountryInfo(
     Languages +
     '</p></li></ul>';
   return strMarkup;
+}
+
+function clearMarkup() {
+  elCountryList.innerHTML = '';
+  elCountryInfo.innerHTML = '';
+}
+
+function displayErrorMessage(messageText) {
+  Notiflix.Notify.failure(messageText);
+}
+
+function displayInfoMessage(messageText) {
+  Notiflix.Notify.info(messageText);
+}
+
+function getSortArray(firstArray) {
+  return [...firstArray].sort((a, b) =>
+    a.name.official.localeCompare(b.name.official)
+  );
+}
+
+function getMurkupCountries(countryArray) {
+  const markupArray = getArrayMurkupCountries(countryArray);
+  return markupArray.join('');
+}
+
+function getArrayMurkupCountries(countryArray) {
+  return countryArray.map(el => {
+    return getMarkupListCountries(el.name.official, el.flags.svg);
+  });
 }
